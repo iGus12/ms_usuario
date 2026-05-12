@@ -5,10 +5,10 @@ Microservicio encargado de la gestión de perfiles y registro de usuarios para l
 ---
 
 ##  Funcionalidades Principales
-*Registro de Usuarios:** Creación de nuevas cuentas en la plataforma con validación de datos.
-*Gestión de Perfiles:** Almacenamiento seguro de información personal y de contacto.
-*Integración de Autenticación:** Actúa en conjunto con el microservicio de Auth (Ms_Auth) para proveer los datos necesarios durante el inicio de sesión.
-*Base de Datos Independiente:** Mantiene la información de los usuarios aislada del resto del sistema, cumpliendo con los principios de diseño de microservicios.
+**Registro de Usuarios:** Creación de nuevas cuentas en la plataforma con validación de datos.
+**Gestión de Perfiles:** Almacenamiento seguro de información personal y de contacto.
+**Integración de Autenticación:** Actúa en conjunto con el microservicio de Auth (Ms_Auth) para proveer los datos necesarios durante el inicio de sesión.
+**Base de Datos Independiente:** Mantiene la información de los usuarios aislada del resto del sistema, cumpliendo con los principios de diseño de microservicios.
 
 ---
 
