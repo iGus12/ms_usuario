@@ -1,0 +1,8 @@
+ms_usuarios\ms_usuario\controller\UsuarioController.class
+ms_usuarios\ms_usuario\model\Usuario.class
+ms_usuarios\ms_usuario\service\UsuarioServiceImpl.class
+ms_usuarios\ms_usuario\repository\UsuarioRepository.class
+ms_usuarios\ms_usuario\service\IUsuarioService.class
+ms_usuarios\ms_usuario\config\SecurityConfig.class
+ms_usuarios\ms_usuario\dto\UsuarioDTO.class
+ms_usuarios\ms_usuario\MsUsuarioApplication.class
