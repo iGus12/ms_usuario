@@ -4,6 +4,7 @@ import ms_usuarios.ms_usuario.dto.UsuarioDTO;
 import ms_usuarios.ms_usuario.model.Usuario;
 import ms_usuarios.ms_usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,12 +15,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Autowired
     private UsuarioRepository repository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public Usuario registrar(UsuarioDTO usuarioDto) {
         Usuario usuario = new Usuario();
 
         usuario.setUsername(usuarioDto.getUsername());
-        usuario.setPassword(usuarioDto.getPassword());
+        usuario.setPassword(passwordEncoder.encode(usuarioDto.getPassword()));
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setNombreCompleto(usuarioDto.getNombreCompleto());
 
@@ -41,6 +45,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public Usuario registrar(Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
         String rol = usuario.getRol();
 
         if (rol == null || rol.isBlank()) {
