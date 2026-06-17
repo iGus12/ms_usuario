@@ -6,11 +6,16 @@ import ms_usuarios.ms_usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
+
+    private static final String AUTH_REGISTRAR_URL = "http://localhost:8082/api/auth/registrar";
 
     @Autowired
     private UsuarioRepository repository;
@@ -18,24 +23,33 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Override
     public Usuario registrar(UsuarioDTO usuarioDto) {
+        String passwordPlano = usuarioDto.getPassword();
+        String rolNormalizado = normalizarRol(usuarioDto.getRol());
+
         Usuario usuario = new Usuario();
 
         usuario.setUsername(usuarioDto.getUsername());
-        usuario.setPassword(passwordEncoder.encode(usuarioDto.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(passwordPlano));
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setNombreCompleto(usuarioDto.getNombreCompleto());
+        usuario.setRol(rolNormalizado);
 
-        String rol = usuarioDto.getRol();
+        Usuario usuarioGuardado = repository.save(usuario);
 
-        if (rol == null || rol.isBlank()) {
-            usuario.setRol("USER");
-        } else {
-            usuario.setRol(rol.toUpperCase());
-        }
+        sincronizarConAuth(
+                usuarioDto.getUsername(),
+                passwordPlano,
+                usuarioDto.getEmail(),
+                usuarioDto.getNombreCompleto(),
+                rolNormalizado
+        );
 
-        return repository.save(usuario);
+        return usuarioGuardado;
     }
 
     @Override
@@ -45,16 +59,69 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public Usuario registrar(Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        String passwordPlano = usuario.getPassword();
+        String rolNormalizado = normalizarRol(usuario.getRol());
 
-        String rol = usuario.getRol();
+        usuario.setPassword(passwordEncoder.encode(passwordPlano));
+        usuario.setRol(rolNormalizado);
 
+        Usuario usuarioGuardado = repository.save(usuario);
+
+        sincronizarConAuth(
+                usuario.getUsername(),
+                passwordPlano,
+                usuario.getEmail(),
+                usuario.getNombreCompleto(),
+                rolNormalizado
+        );
+
+        return usuarioGuardado;
+    }
+
+    private String normalizarRol(String rol) {
         if (rol == null || rol.isBlank()) {
-            usuario.setRol("USER");
-        } else {
-            usuario.setRol(rol.toUpperCase());
+            return "USER";
         }
 
-        return repository.save(usuario);
+        String rolNormalizado = rol.trim().toUpperCase();
+
+        if (rolNormalizado.equals("VETERINARIA")) {
+            return "VETERINARIO";
+        }
+
+        return rolNormalizado;
+    }
+
+    private void sincronizarConAuth(
+            String username,
+            String passwordPlano,
+            String email,
+            String nombreCompleto,
+            String rol
+    ) {
+        Map<String, Object> usuarioAuth = new HashMap<>();
+
+        usuarioAuth.put("username", username);
+        usuarioAuth.put("password", passwordPlano);
+        usuarioAuth.put("email", email);
+        usuarioAuth.put("nombreCompleto", nombreCompleto);
+        usuarioAuth.put("rol", rol);
+
+        try {
+            restTemplate.postForObject(
+                    AUTH_REGISTRAR_URL,
+                    usuarioAuth,
+                    Object.class
+            );
+
+            System.out.println("Usuario sincronizado con ms_login: " + username + " - Rol: " + rol);
+        } catch (Exception error) {
+            System.out.println("Error al sincronizar usuario con ms_login: " + error.getMessage());
+
+            throw new RuntimeException(
+                    "El usuario se guardó en ms_usuarios, pero no se pudo sincronizar con ms_login. " +
+                    "Revisa que el microservicio Auth esté encendido en el puerto 8082."
+            );
+        }
     }
 }
