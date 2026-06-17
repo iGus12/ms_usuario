@@ -27,10 +27,8 @@ public class SecurityConfig {
         return http.build();
     }
 
-<<<<<<< Updated upstream
+
     // 3. Le decimos exactamente a quiÃ©n dejar pasar
-=======
->>>>>>> Stashed changes
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
