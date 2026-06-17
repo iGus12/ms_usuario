@@ -17,23 +17,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 1. Habilitamos CORS
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/usuarios/**").permitAll() // 2. Rutas liberadas
-                .anyRequest().authenticated()
+                // MAGIA AQUÍ: Le decimos que en ESTE microservicio, deje pasar TODO sin preguntar
+                .anyRequest().permitAll() 
             );
         
         return http.build();
     }
 
+<<<<<<< Updated upstream
     // 3. Le decimos exactamente a quiÃ©n dejar pasar
+=======
+>>>>>>> Stashed changes
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permite tu puerto de React (5173) y tu puerto del Dashboard HTML (3000)
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3000")); 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("*")); // Permite cualquier frontend
+        configuration.setAllowedMethods(Arrays.asList("*")); // Permite GET, POST, OPTIONS, todo
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         
@@ -42,6 +44,7 @@ public class SecurityConfig {
         return source;
     }
 
+    // Mantenemos esto porque lo necesitas para guardar la password encriptada
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
