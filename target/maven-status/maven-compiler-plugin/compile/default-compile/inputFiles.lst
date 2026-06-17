@@ -1,8 +1,9 @@
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\config\SecurityConfig.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\controller\UsuarioController.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\dto\UsuarioDTO.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\model\Usuario.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\MsUsuarioApplication.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\repository\UsuarioRepository.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\service\IUsuarioService.java
-C:\Users\mv160\OneDrive\Documentos\GitHub\ms_usuario\src\main\java\ms_usuarios\ms_usuario\service\UsuarioServiceImpl.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\config\RestTemplateConfig.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\config\SecurityConfig.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\controller\UsuarioController.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\dto\UsuarioDTO.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\model\Usuario.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\MsUsuarioApplication.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\repository\UsuarioRepository.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\service\IUsuarioService.java
+C:\Users\thebo\Desktop\DUOC\DEVOPS\Devops2\frontend\ms_usuario\src\main\java\ms_usuarios\ms_usuario\service\UsuarioServiceImpl.java
